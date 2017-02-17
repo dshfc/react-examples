@@ -8,6 +8,18 @@ export default class PersonEdit extends Component {
     this.state = {
       person: props.person
     };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.onDone = this.onDone.bind(this);
+  }
+
+  handleInputChange(event) {
+    this.state.person[event.target.name] = event.target.value;
+    this.setState(this.state);
+  }
+
+  onDone() {
+    this.props.onDone(this.state.person);
   }
 
   render() {
@@ -18,11 +30,9 @@ export default class PersonEdit extends Component {
             <td>First Name</td>
             <td>
               <input type="text"
+                     name="firstName"
                      defaultValue={this.state.person.firstName}
-                     onChange={(val) => {
-                       this.state.person.firstName = val.target.value;
-                       this.setState(this.state);
-                     }}
+                     onChange={this.handleInputChange}
               />
             </td>
           </tr>
@@ -30,16 +40,15 @@ export default class PersonEdit extends Component {
             <td>Last Name</td>
             <td>
               <input type="text"
+                     name="lastName"
                      defaultValue={this.props.person.lastName}
-                     onChange={(val) => {
-                       this.state.person.lastName = val.target.value;
-                       this.setState(this.state);
-                     }}/>
+                     onChange={this.handleInputChange}
+              />
             </td>
           </tr>
           <tr>
             <td colSpan="2">
-              <button onClick={() => this.props.onDone(this.state.person)}>Submit</button>
+              <button onClick={this.onDone}>Submit</button>
             </td>
           </tr>
         </tbody>
