@@ -1,17 +1,28 @@
 import React from 'react';
-import { shallow } from 'enzyme'
 import App from './App';
+import { shallow } from 'enzyme';
 import PersonList from './PersonList';
 import PersonEdit from './PersonEdit';
 
 describe('App', () => {
-  it('renders a PersonList by default', () => {
+  it('has a personList', () => {
     const div = document.createElement('div');
     const app = shallow(<App />, div);
     const personList = app.find(PersonList.name);
+    expect(personList).toHaveLength(1);
+  });
 
-    expect(app.state().editing).toBe(null);
-    expect(personList.props().people).toBe(app.state().people);
+  it('has state', () => {
+    const div = document.createElement('div');
+    const app = shallow(<App />, div);
+    expect(app.state().people).toHaveLength(3);
+  });
+
+  it('passes people state', () => {
+    const div = document.createElement('div');
+    const app = shallow(<App />, div);
+    const personList = app.find(PersonList.name);
+    expect(personList.props().people).toHaveLength(3);
   });
 
   it('can switch to edit mode', () => {

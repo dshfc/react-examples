@@ -4,13 +4,11 @@ export default class PersonEdit extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      person: props.person
+      person: this.props.person
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.onDone = this.onDone.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleInputChange(event) {
@@ -24,35 +22,21 @@ export default class PersonEdit extends Component {
 
   render() {
     return (
-      <table>
-        <tbody>
-          <tr>
-            <td>First Name</td>
-            <td>
-              <input type="text"
-                     name="firstName"
-                     defaultValue={this.state.person.firstName}
-                     onChange={this.handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Last Name</td>
-            <td>
-              <input type="text"
-                     name="lastName"
-                     defaultValue={this.props.person.lastName}
-                     onChange={this.handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="2">
-              <button onClick={this.onDone}>Submit</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <form>
+        <div className="form-group">
+          <label htmlFor="firstName">First Name</label>
+          <input type="text" className="form-control" id="firstName" name="firstName"
+                 defaultValue={this.state.person.firstName}
+                 onChange={this.handleInputChange}/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Last Name</label>
+          <input type="text" className="form-control" id="lastName" name="lastName"
+                 defaultValue={this.state.person.lastName}
+                 onChange={this.handleInputChange}/>
+        </div>
+        <button onClick={this.onDone} className="btn btn-primary">Submit</button>
+      </form>
     );
   }
 }

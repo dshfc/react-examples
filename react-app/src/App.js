@@ -1,35 +1,22 @@
 import React, {Component} from 'react';
-import PersonList from './PersonList'
-import PersonEdit from './PersonEdit'
+import PersonList from './PersonList';
+import PersonEdit from './PersonEdit';
 
 export default class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       editing: null,
       people: [
-        {
-          firstName: 'Alan',
-          lastName: 'Turing'
-        },
-        {
-          firstName: 'Alanzo',
-          lastName: 'Church'
-        },
-        {
-          firstName: 'Grace',
-          lastName: 'Hopper'
-        },
+        {firstName: 'Alan', lastName: 'Turing'},
+        {firstName: 'Alanzo', lastName: 'Church'},
+        {firstName: 'Grace', lastName: 'Hopper'}
       ]
     };
 
-    this.onEdit = this.onEdit.bind(this);
     this.onDone = this.onDone.bind(this);
-  }
-
-  onEdit(person) {
-    this.state.editing = person;
-    this.setState(this.state);
+    this.onEdit = this.onEdit.bind(this);
   }
 
   onDone() {
@@ -37,10 +24,15 @@ export default class App extends Component {
     this.setState(this.state);
   }
 
+  onEdit(person) {
+    this.state.editing = person;
+    this.setState(this.state);
+  }
+
   get childComponent() {
     return this.state.editing
       ? <PersonEdit person={this.state.editing} onDone={this.onDone} />
-      : <PersonList people={this.state.people} onEdit={this.onEdit} />
+      : <PersonList people={this.state.people} onEdit={this.onEdit}/>
   }
 
   render() {

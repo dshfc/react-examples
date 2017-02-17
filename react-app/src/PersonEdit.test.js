@@ -1,42 +1,36 @@
 import React from 'react';
-import {shallow} from 'enzyme'
-import App from './App';
+import {shallow} from 'enzyme';
+import sinon from 'sinon';
 import PersonEdit from './PersonEdit';
 
 describe('PersonEdit', () => {
-  it('copies props to state', () => {
-    const person = {
-      firstName: 'John',
-      lastName: 'Smith'
-    };
+  it('should update firstName', () => {
+    const expected = {firstName: 'Alan', lastName: 'Turing'};
     const div = document.createElement('div');
-    const personEdit = shallow(<PersonEdit person={person}/>, div);
+    const personEdit = shallow(<PersonEdit person={expected}/>, div);
+    personEdit.find('#firstName').simulate('change', {target: {name: 'firstName', value: 'Ford'}});
+    expect(personEdit.state().person.firstName).toBe('Ford');
+  });
 
-    expect(personEdit.state().person).toBe(person);
+  it('should update lastName', () => {
+    const expected = {firstName: 'Alan', lastName: 'Turing'};
+    const div = document.createElement('div');
+    const personEdit = shallow(<PersonEdit person={expected}/>, div);
+    personEdit.find('#lastName').simulate('change', {target: {name: 'lastName', value: 'Prefect'}});
+    expect(personEdit.state().person.lastName).toBe('Prefect');
   });
 
   it('returns edited person', () => {
-    const person = {
-      firstName: 'John',
-      lastName: 'Smith'
-    };
-    let actual;
-    const onDone = (result) => actual = result;
+    const expected = {firstName: 'Alan', lastName: 'Turing'};
+    const onDone = sinon.spy();
     const div = document.createElement('div');
-    const personEdit = shallow(<PersonEdit person={person} onDone={onDone}/>, div);
+    const personEdit = shallow(<PersonEdit person={expected} onDone={onDone}/>, div);
 
-    personEdit.node._self.handleInputChange({
-      target: {
-        name: 'firstName',
-        value: 'Fred'
-      }
-    });
-    personEdit.node._self.onDone();
+    personEdit.find('#firstName').simulate('change', {target: {name: 'firstName', value: 'Ford'}});
+    personEdit.find('#lastName').simulate('change', {target: {name: 'lastName', value: 'Prefect'}});
+    personEdit.find('button').simulate('click');
 
-    expect(personEdit.state().person.firstName).toBe('Fred');
-    expect(personEdit.state().person.lastName).toBe('Smith');
-    expect(actual.firstName).toBe('Fred');
-    expect(actual.lastName).toBe('Smith');
+    expect(onDone.calledWith({firstName: 'Ford', lastName: 'Prefect'})).toBe(true);
   });
 
 });
