@@ -17,8 +17,8 @@ export default class App extends Component {
           lastName: 'Church'
         },
         {
-          firstName: 'Brent',
-          lastName: 'Gardner'
+          firstName: 'Grace',
+          lastName: 'Hopper'
         },
       ]
     };
