@@ -5,7 +5,7 @@ export default class Ghosts extends Component {
 
   get ghosts() {
     const ghosts = this.props.ghosts.map((ghost, i) => {
-      return <Ghost key={i} x={ghost[0]} y={ghost[1]} />;
+      return <Ghost key={i} x={ghost.pos[0]} y={ghost.pos[1]} />;
     });
     return ghosts;
   }
