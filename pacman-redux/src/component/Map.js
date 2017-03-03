@@ -18,6 +18,7 @@ export default class Map extends Component {
       '0': '#0000FF',
       '1': '#000000',
       '2': '#FFFFAA',
+      '3': '#FFAAAA',
       '5': '#FFFFFF'
     };
     const key = `${colIdx}-${rowIdx}`;
