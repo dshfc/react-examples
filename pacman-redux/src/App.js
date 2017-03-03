@@ -1,88 +1,40 @@
 import React, {Component} from 'react';
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 import map from './map';
-import Util from './util';
 import Ghost from './component/Ghost'
 import PacMan from './component/PacMan'
 import ghostReducer from './reducer/GhostReducer'
+import pacManReducer from './reducer/PacManReducer'
 import './App.css';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      rx: 10,
-      ry: 10,
-      width: 28,
-      height: 28,
-      map: map.map,
-      pos: map.pacman,
-      vel: [0, 0],
-      ghosts: map.ghosts
-    };
-
     this.key = 0; // State needed to track keyboard :(
     document.body.addEventListener('keydown', (ev) => this.key = ev.keyCode.toString());
 
-    this.reducer = this.reducer.bind(this);
+    const reducer = combineReducers({pacManReducer, ghostReducer});
     this.stateChange = this.stateChange.bind(this);
 
-    this.store = createStore(this.reducer);
+    this.store = createStore(reducer);
     this.store.subscribe(this.stateChange);
 
     setInterval(() => this.store.dispatch({type: 'TICK', key: this.key}), 1000/60);
   }
 
-  reducer(state, action) {
-    if (!state) {
-      state = this.state;
-    }
-    switch (action.type) {
-      case 'TICK':
-
-        // Ghosts
-        const ghosts = state.ghosts.map((state, action) => ghostReducer(state, action));
-
-        // PacMan
-        const keyVec = {
-          '37': [-1,0],
-          '38': [0,-1],
-          '39': [1, 0],
-          '40': [0, 1],
-        };
-        const foc = (val, sign) => sign > 0 ? Math.floor(val) : Math.ceil(val); // floor or ceil
-        const focVec = (vec, sign) => [foc(vec[0], sign[0]), foc(vec[1], sign[1])];
-        const mapHit = (pos) => state.map[pos[1]][pos[0]] !== 1;
-        const snap = (val, cond) => cond ? val : Math.round(val);
-        const snapVec = (val, cond) => [snap(val[0], cond[0]), snap(val[1], cond[1])];
-
-        const desiredVelocity = keyVec[action.key] || [0,0];
-        const desiredPos = focVec(Util.add(state.pos, desiredVelocity), desiredVelocity);
-        const newPos = mapHit(desiredPos)
-          ? Util.round(state.pos)
-          : Util.add(state.pos, Util.divide(desiredVelocity, 10));
-        const newVel = mapHit(desiredPos)
-          ? [0,0] : state.vel;
-        const snapped = snapVec(newPos, desiredVelocity);
-        return Object.assign({}, state, {
-          pos: snapped,
-          vel: newVel,
-          ghosts: ghosts
-        });
-      default:
-        return state;
-    }
-  };
-
   stateChange() {
-    this.setState(this.store.getState());
+    const state = this.store.getState();
+    this.setState(state);
   }
 
   get map() {
-    const cells = this.state.map.map((row, rowIdx) => this.renderRow(row, rowIdx));
-    const ghosts = this.state.ghosts.map((ghost, i) => (<Ghost key={i} x={ghost[0]} y={ghost[1]} />));
-    const pacman = (<PacMan x={this.state.pos[0]} y={this.state.pos[1]} />);
+    if(!this.state) {
+      return <div/>
+    }
+    const cells = this.state.pacManReducer.map.map((row, rowIdx) => this.renderRow(row, rowIdx));
+    const ghosts = this.state.ghostReducer.ghosts.map((ghost, i) => (<Ghost key={i} x={ghost[0]} y={ghost[1]} />));
+    const pacman = (<PacMan key="pacman" x={this.state.pacManReducer.pacman.pos[0]} y={this.state.pacManReducer.pacman.pos[1]} />);
     return [
       ...cells,
       ...ghosts,
@@ -101,8 +53,9 @@ export default class App extends Component {
       '2': '#FFFFAA',
       '5': '#FFFFFF'
     };
+    const key = `${colIdx}-${rowIdx}`;
     const color = colorMap[cell.toString()];
-    return (<rect x={colIdx} y={rowIdx} width="1" height="1" fill={color}/>);
+    return (<rect key={key} x={colIdx} y={rowIdx} width="1" height="1" fill={color}/>);
   }
 
   render() {
