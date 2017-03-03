@@ -30,7 +30,7 @@ class Calculate extends Component {
 
   handleChange(e) {
     this.setState({
-      [e.target.id]: e.target.value
+      numbers: e.target.value.split("\n").map(n => n.trim()).filter(n => n)
     })
   }
 
