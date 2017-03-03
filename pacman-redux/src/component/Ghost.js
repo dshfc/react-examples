@@ -1,19 +1,6 @@
 import React, {Component} from 'react';
 
 export default class Ghost extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  reducer(state, action) {
-    switch (action.type) {
-      case 'TICK':
-        return [state[0] + 0.1, state[1]];
-      default:
-        return state;
-    }
-  };
-
   get transform() {
     return `translate(${this.props.x}, ${this.props.y}) scale(0.0625, 0.0625) translate(-157, -37)`;
   }
