@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {createStore, combineReducers} from 'redux';
-import Ghost from './component/Ghost'
+import Ghosts from './component/Ghosts'
 import PacMan from './component/PacMan'
 import Map from './component/Map'
 import ghostReducer from './reducer/GhostReducer'
@@ -32,20 +32,11 @@ export default class App extends Component {
     this.setState(state);
   }
 
-  get map() {
-    const ghosts = this.state.ghostReducer.ghosts.map((ghost, i) => {
-      return <Ghost key={i} x={ghost[0]} y={ghost[1]} />;
-    });
-    return [
-      ...ghosts
-    ];
-  }
-
   render() {
     return (
       <svg viewBox="0 0 28 28" style={{width: "100%", height: "100%"}}>
         <Map key="map" map={this.state.pacManReducer.map} />
-        {this.map}
+        <Ghosts key="ghosts" ghosts={this.state.ghostReducer.ghosts} />
         <PacMan key="pacman" x={this.state.pacManReducer.pacman.pos[0]} y={this.state.pacManReducer.pacman.pos[1]} />
       </svg>
     );
