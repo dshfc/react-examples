@@ -22,7 +22,7 @@ export default class Map extends Component {
     };
     const key = `${colIdx}-${rowIdx}`;
     const color = colorMap[cell.toString()];
-    return (<rect key={key} x={colIdx} y={rowIdx} width="1" height="1" fill={color}/>);
+    return (<rect key={key} x={colIdx * 10} y={rowIdx * 10} width="10" height="10" fill={color}/>);
   }
 
   render() {

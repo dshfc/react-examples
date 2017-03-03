@@ -32,7 +32,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <svg viewBox="0 0 28 28" style={{width: "100%", height: "100%"}}>
+      <svg viewBox="0 0 280 280" style={{width: "100%", height: "100%"}}>
         <Map key="map" map={this.state.map} />
         <Ghosts key="ghosts" ghosts={this.state.ghosts} />
         <PacMan key="pacman" x={this.state.pacman.pos[0]} y={this.state.pacman.pos[1]} />

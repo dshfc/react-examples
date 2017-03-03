@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 export default class Ghost extends Component {
   get transform() {
-    return `translate(${this.props.x}, ${this.props.y}) scale(0.0625, 0.0625) translate(-157, -37)`;
+    return `translate(${this.props.x * 10}, ${this.props.y * 10}) scale(0.625, 0.625) translate(-157, -37)`;
   }
 
   render() {
