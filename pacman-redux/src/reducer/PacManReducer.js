@@ -2,14 +2,16 @@ import Util from '../util';
 import map from '../map';
 
 export default (state, action) => {
-  if(!state) {
-    return {
+  if(!state || !state.ghosts) {
+    const newState = state || {};
+    const myState = {
       pacman: {
         pos: [13, 20],
         vel: [0,0]
       },
       map: map.map
     };
+    return Object.assign({}, newState, myState);
   }
 
   switch (action.type) {

@@ -1,11 +1,13 @@
 export default (state, action) => {
 
-  if(!state) {
-    return {
+  if(!state || !state.ghosts) {
+    const newState = state || {};
+    const myState = {
       ghosts: [
         [13, 10]
       ]
     };
+    return Object.assign({}, newState, myState);
   }
 
   switch (action.type) {
