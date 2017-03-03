@@ -17,7 +17,7 @@ class Calculate extends Component {
     e.preventDefault()
     const {operation, x, y} = this.state
     const operationParam = this.state.operation ? `operation=${operation}&` : ''
-    const path = `/calculate?${operationParam}x=${x}&y=${y}`
+    const path = `/math/calculate?${operationParam}x=${x}&y=${y}`
     fetch(path)
       .then(r => {
         if(r.ok) return r.text()

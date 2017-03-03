@@ -15,7 +15,7 @@ class Calculate extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-    const path = `/sum?n=${this.state.numbers.join('&n=')}`
+    const path = `/math/sum?n=${this.state.numbers.join('&n=')}`
     fetch(path, { method: "POST" } )
       .then(r => {
         if(r.ok) return r.text()

@@ -15,7 +15,7 @@ class Calculate extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-    const path = `/area`
+    const path = `/math/area`
     const method = "POST"
     let bodyParts = []
     bodyParts.push(`type=${this.state.type}`)

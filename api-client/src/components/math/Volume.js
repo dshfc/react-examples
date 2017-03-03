@@ -15,7 +15,7 @@ class Calculate extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-    const path = `/volume/${this.state.length}/${this.state.width}/${this.state.height}`
+    const path = `/math/volume/${this.state.length}/${this.state.width}/${this.state.height}`
     const method = "PATCH"
     fetch(path, { method } )
       .then(r => {

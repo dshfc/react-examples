@@ -14,7 +14,7 @@ class Pi extends Component {
   getPi(e) {
     e.preventDefault()
 
-    fetch('/pi')
+    fetch('/math/pi')
       .then(r => {
         if(r.ok) return r.text()
         let message =`An error has occurred with GET to ${r.url}`
