@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {createStore} from 'redux';
 import map from './map';
 import Util from './util';
-import Ghost from './Ghost'
+import Ghost from './component/Ghost'
+import PacMan from './component/PacMan'
+import ghostReducer from './reducer/GhostReducer'
 import './App.css';
 
 export default class App extends Component {
@@ -38,6 +40,11 @@ export default class App extends Component {
     }
     switch (action.type) {
       case 'TICK':
+
+        // Ghosts
+        const ghosts = state.ghosts.map((state, action) => ghostReducer(state, action));
+
+        // PacMan
         const keyVec = {
           '37': [-1,0],
           '38': [0,-1],
@@ -60,7 +67,8 @@ export default class App extends Component {
         const snapped = snapVec(newPos, desiredVelocity);
         return Object.assign({}, state, {
           pos: snapped,
-          vel: newVel
+          vel: newVel,
+          ghosts: ghosts
         });
       default:
         return state;
@@ -73,8 +81,8 @@ export default class App extends Component {
 
   get map() {
     const cells = this.state.map.map((row, rowIdx) => this.renderRow(row, rowIdx));
-    const ghosts = this.state.ghosts.map((ghost) => (<Ghost x={ghost[0]} y={ghost[1]} />));
-    const pacman = <circle key="pacman" cx={this.state.pos[0] + 0.5} cy={this.state.pos[1] + 0.5} r={0.5} fill="yellow"/>;
+    const ghosts = this.state.ghosts.map((ghost, i) => (<Ghost key={i} x={ghost[0]} y={ghost[1]} />));
+    const pacman = (<PacMan x={this.state.pos[0]} y={this.state.pos[1]} />);
     return [
       ...cells,
       ...ghosts,
