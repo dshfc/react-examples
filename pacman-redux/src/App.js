@@ -5,6 +5,7 @@ import PacMan from './component/PacMan'
 import Map from './component/Map'
 import initialState from './InitialState'
 import ghostReducer from './reducer/GhostReducer'
+import timeReducer from './reducer/TimeReducer'
 import pacManReducer from './reducer/PacManReducer'
 import combineReducers from './CombineReducers'
 import './App.css';
@@ -16,15 +17,25 @@ export default class App extends Component {
     this.key = 0; // State needed to track keyboard :(
     document.body.addEventListener('keydown', (ev) => this.key = ev.keyCode.toString());
 
-    const setState = (state, action) => state || initialState;
-    const reducer = combineReducers(setState, pacManReducer, ghostReducer);
+    const setState = (state, action) => {
+      return state || initialState;
+    };
+    const reducer = combineReducers(setState, pacManReducer, ghostReducer, timeReducer);
     this.stateChange = this.stateChange.bind(this);
 
     this.state = reducer(undefined, {type: 'none'});
     this.store = createStore(reducer, this.state);
     this.store.subscribe(this.stateChange);
 
-    setInterval(() => this.store.dispatch({type: 'TICK', key: this.key}), 1000/30);
+    const start = new Date().getTime();
+    setInterval(() => {
+      if(this.state.time % 60 === 0) {
+        const now = new Date().getTime();
+        const delta = (now - start) / 1000;
+        console.log('FPS: ', Math.round(this.state.time / delta));
+      }
+      return this.store.dispatch({type: 'TICK', key: this.key})
+    }, 1000/60);
   }
 
   stateChange() {

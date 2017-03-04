@@ -8,12 +8,13 @@ export default function combineReducers() {
     const b = arguments[1];
     return (state, action) => b(a(state, action), action);
   } else {
-    const a = arguments[arguments.length-3];
-    const b = arguments[arguments.length-2];
-    const c = arguments[arguments.length-1];
+    // Use recursion to create binary tree of reducer functions that call all args in order
+    const e = arguments[arguments.length-2];
+    const f = arguments[arguments.length-1];
     const func = (state, action) => {
-      return c(b(state, action), action);
+      return f(e(state, action), action);
     };
-    return combineReducers(a, func);
+    const args = [...arguments].slice(0, arguments.length-2);
+    return combineReducers(...args, func); // Does JS have tail recursion yet?
   }
 }
