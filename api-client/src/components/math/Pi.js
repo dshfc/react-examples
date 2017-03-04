@@ -29,7 +29,7 @@ class Pi extends Component {
   render() {
     return (
       <Row id="pi">
-        <Col md={10} mdOffset={2}>
+        <Col sm={10} smOffset={2}>
           <h3>What is Pi? (Simple Endpoint)</h3>
           <p>
             <Button onClick={this.getPi}>Find out!</Button>

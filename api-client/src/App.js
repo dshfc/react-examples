@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Navbar } from 'react-bootstrap';
-import { Row, Col } from 'react-bootstrap';
-import Math from './components/math/Math';
+import React, { Component } from 'react'
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap-theme.css'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Link } from 'react-router'
+import { LinkContainer } from 'react-router-bootstrap'
 
 class App extends Component {
 
@@ -14,11 +14,16 @@ class App extends Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Spring Math</a>
+              <Link to="/">API Client</Link>
             </Navbar.Brand>
           </Navbar.Header>
+          <Nav>
+            <LinkContainer to="/math">
+              <NavItem eventKey={1}>Math</NavItem>
+            </LinkContainer>
+          </Nav>
         </Navbar>
-        <Math />
+        {this.props.children}
       </div>
     );
   }

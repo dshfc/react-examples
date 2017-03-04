@@ -37,7 +37,7 @@ class Calculate extends Component {
   render() {
     return (
       <Row id="sum">
-        <Col md={10} mdOffset={2}>
+        <Col sm={10} smOffset={2}>
           <h3>Sum (Querystrings)</h3>
           <form onSubmit={this.onSubmit}>
             <FormGroup controlId="numbers">

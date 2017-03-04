@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { AutoAffix } from 'react-overlays';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import Pi from './Pi';
 import Calculate from './Calculate';
@@ -36,15 +35,13 @@ class Math extends Component {
         <div className="container">
           <Row>
             <Col md={3}>
-              <AutoAffix viewportOffsetTop={15} container={this}>
-                <ListGroup>
-                  <ListGroupItem href="#pi">PI (Basic Request)</ListGroupItem>
-                  <ListGroupItem href="#calculate">Calculate (Querystring)</ListGroupItem>
-                  <ListGroupItem href="#sum">Sum (Querystring)</ListGroupItem>
-                  <ListGroupItem href="#volume">Volume (Path Variables)</ListGroupItem>
-                  <ListGroupItem href="#area">Area (Form Variables)</ListGroupItem>
-                </ListGroup>
-              </AutoAffix>
+              <ListGroup>
+                <ListGroupItem href="#pi">PI (Basic Request)</ListGroupItem>
+                <ListGroupItem href="#calculate">Calculate (Querystring)</ListGroupItem>
+                <ListGroupItem href="#sum">Sum (Querystring)</ListGroupItem>
+                <ListGroupItem href="#volume">Volume (Path Variables)</ListGroupItem>
+                <ListGroupItem href="#area">Area (Form Variables)</ListGroupItem>
+              </ListGroup>
             </Col>
             <Col md={9}>
               <Pi />
