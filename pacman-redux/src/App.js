@@ -22,7 +22,7 @@ export default class App extends Component {
     this.store = createStore(reducer, this.state);
     this.store.subscribe(this.stateChange);
 
-    setInterval(() => this.store.dispatch({type: 'TICK', key: this.key}), 1000/60);
+    setInterval(() => this.store.dispatch({type: 'TICK', key: this.key}), 1000/30);
   }
 
   stateChange() {
@@ -33,7 +33,7 @@ export default class App extends Component {
   render() {
     return (
       <svg viewBox="0 0 280 280" style={{width: "100%", height: "100%"}}>
-        <Map key="map" map={this.state.map} />
+        <Map key="map" map={this.state.map} time={this.state.time} />
         <Ghosts key="ghosts" ghosts={this.state.ghosts} />
         <PacMan key="pacman" x={this.state.pacman.pos[0]} y={this.state.pacman.pos[1]} />
       </svg>

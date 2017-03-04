@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import Wall from './Wall.js';
+import Floor from './Floor.js';
+import Pellet from './Pellet.js';
+import PowerUp from './PowerUp.js';
 
 export default class Map extends Component {
 
@@ -14,16 +18,16 @@ export default class Map extends Component {
   }
 
   renderCell(rowIdx, colIdx, cell) {
-    const colorMap = {
-      '0': '#0000FF',
-      '1': '#000000',
-      '2': '#FFFFAA',
-      '3': '#FFAAAA',
-      '5': '#FFFFFF'
-    };
+
     const key = `${colIdx}-${rowIdx}`;
-    const color = colorMap[cell.toString()];
-    return (<rect key={key} x={colIdx * 10} y={rowIdx * 10} width="10" height="10" fill={color}/>);
+    switch (cell) {
+      case 0: return <Wall key={key} x={colIdx * 10} y={rowIdx * 10} />;
+      case 1: return <Pellet key={key} x={colIdx * 10} y={rowIdx * 10} />;
+      case 2: return <Pellet key={key} x={colIdx * 10} y={rowIdx * 10} />;
+      case 3: return <Floor key={key} x={colIdx * 10} y={rowIdx * 10} />;
+      case 4: return <PowerUp key={key} x={colIdx * 10} y={rowIdx * 10} time={this.props.time} />;
+      default: return <g />
+    }
   }
 
   render() {

@@ -9,7 +9,8 @@ export default (state, action) => {
         pos: [130, 200],
         vel: [0,0]
       },
-      map: map
+      map: map,
+      time: 0
     };
     return Object.assign({}, newState, myState);
   }
@@ -50,7 +51,8 @@ export default (state, action) => {
         pacman: {
           pos: newPos,
           vel: newVel
-        }
+        },
+        time: state.time + 1
       });
       return newState;
 
