@@ -32,8 +32,12 @@ export default (state, action) => {
           const newPos = Util.add(ghost.pos, newVel);
           const finalPos = state.pacman.dying > 0 ? ghost.pos : newPos;
 
+          const homePos = state.pacman.power > 0 && Util.dist(ghost.pos, state.pacman.pos) < 10
+            ? [130, 110]
+            : finalPos;
+
           return {
-            pos: finalPos,
+            pos: homePos,
             vel: newVel
           };
         } catch (ex) {

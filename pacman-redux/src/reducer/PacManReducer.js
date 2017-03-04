@@ -32,7 +32,6 @@ export default (state, action) => {
         const dist = Util.dist(ghost.pos, state.pacman.pos);
         return dist < accumulator ? dist : accumulator;
       }, Number.POSITIVE_INFINITY);
-      console.log(dist);
       const dying = power <= 0 && dist < 10 ? state.pacman.dying + 1 : state.pacman.dying;
       const finalPos = dying > 0 ? state.pacman.pos : newPos;
 
