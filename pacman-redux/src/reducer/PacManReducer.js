@@ -4,34 +4,25 @@ export default (state, action) => {
   switch (action.type) {
     case 'TICK':
 
-      const keyVec = {
-        '37': [-1,0],
-        '38': [0,-1],
-        '39': [1, 0],
-        '40': [0, 1],
-      };
-
-      const cloneRowAndSetCell = (row, rowIdx, pos, val) => {
-        return row.map((cell, cellIdx) => {
-          return Util.equals(pos, [cellIdx, rowIdx]) ? val : cell;
-        });
-      };
-      const cloneMapAndSetCell = (map, pos, val) => {
-        return map.map((row, rowIdx) => cloneRowAndSetCell(row, rowIdx, pos, val));
-      };
-
-      const desiredVel = keyVec[action.key] || [0,0];
-      const mapPos = Util.divide(state.pacman.pos, 10);
-      const newVel = Util.divisible(state.pacman.pos, 10) && !Util.mapHit(state.map, Util.add(mapPos, desiredVel))
+      // If pacman is exactly on a tile, and the tile in the direction of the last keypress is free, change direction
+      // Otherwise, retain existing velocity
+      const desiredVel = Util.keyVec[action.key] || [0,0];
+      const curMapPos = Util.divide(state.pacman.pos, 10);
+      const onSquare = Util.divisible(state.pacman.pos, 10);
+      const newVel = onSquare && !Util.mapHit(state.map, Util.add(curMapPos, desiredVel))
         ? desiredVel
         : state.pacman.vel;
 
+      // Move pacman to the next position, unless that position collides with a wall
       const nextPos = Util.add(state.pacman.pos, newVel);
-      const newPos = Util.divisible(state.pacman.pos, 10) && Util.mapHit(state.map, Util.add(mapPos, newVel))
+      const newPos = onSquare && Util.mapHit(state.map, Util.add(curMapPos, newVel))
         ? state.pacman.pos
         : nextPos;
 
-      const newMap = Util.divisible(state.pacman.pos, 10) ? cloneMapAndSetCell(state.map, mapPos, 3) : state.map;
+      // Obey the law of immutability, and deep copy the whole map but remove the pellet pacman just ate
+      const newMap = onSquare ? Util.cloneMapAndSetCell(state.map, curMapPos, 3) : state.map;
+
+      // Update and return the state
       const newState = Object.assign({}, state, {
         map: newMap,
         pacman: {

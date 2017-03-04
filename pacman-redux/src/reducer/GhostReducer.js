@@ -3,29 +3,45 @@ import Util from '../util'
 export default (state, action) => {
   switch (action.type) {
     case 'TICK':
-      const ghosts = state.ghosts.map((ghost) => {
-        const allDirs = [[1,0],[0,1],[-1,0],[0,-1]];
-        const availableDirs = allDirs.reduce((ar, dir) => {
-          return Util.equals(ghost.vel, dir) || Util.equals(Util.multiply(ghost.vel, [-1,-1]), dir)
-            ? ar
-            : [...ar, dir]
-        }, []);
-        const nextDir = availableDirs[state.rand(availableDirs.length)];
+      const ghosts = state.ghosts.map((ghost, i) => {
+        try {
 
+          const desiredVel = ghost.vel;
+          const curMapPos = Util.divide(ghost.pos, 10);
+          const onSquare = Util.divisible(ghost.pos, 10);
 
-        const desiredVelocity = ghost.vel;
-        const desiredPos = Util.focVec(Util.add(ghost.pos, desiredVelocity), desiredVelocity);
-        const newPos = Util.ghostHit(state.map, desiredPos)
-          ? Util.round(ghost.pos)
-          : Util.add(ghost.pos, Util.divide(desiredVelocity, 10));
-        const newVel = Util.ghostHit(state.map, desiredPos)
-          ? nextDir : ghost.vel;
-        const snapped = Util.snapVec(newPos, desiredVelocity);
-        return {
-          pos: snapped,
-          vel: newVel
-        };
+          const computeAvailable = () => {
+            return Util.allDirs.reduce((ar, dir) => {
+              const isForward = Util.equals(ghost.vel, dir);
+              const isBackward = Util.equals(Util.multiply(ghost.vel, [-1, -1]), dir);
+              const isBlocked = Util.ghostHit(state.map, Util.add(curMapPos, dir));
+              return (isForward || isBackward || isBlocked) ? ar : [...ar, dir]
+            }, []);
+          };
+          const computeNext = () => {
+            const availableDirs = computeAvailable();
+            const idx = state.rand(availableDirs.length);
+            const nextDir = availableDirs[idx];
+            return nextDir;
+          };
+          const nextDir = onSquare ? computeNext() : ghost.vel;
+
+          const newVel = onSquare && Util.mapHit(state.map, Util.add(curMapPos, desiredVel))
+            ? nextDir
+            : desiredVel;
+          const newPos = Util.add(ghost.pos, newVel);
+
+          return {
+            pos: newPos,
+            vel: newVel
+          };
+        } catch (ex) {
+          console.log('ghost ', i, ' error: ', ex);
+          return ghost;
+        }
       });
+
+      // Return the new state
       return Object.assign({}, state, {
         ghosts: ghosts
       });
