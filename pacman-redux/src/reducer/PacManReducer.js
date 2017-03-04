@@ -1,20 +1,6 @@
 import Util from '../util';
-import map from '../map';
 
 export default (state, action) => {
-  if(!state || !state.ghosts) {
-    const newState = state || {};
-    const myState = {
-      pacman: {
-        pos: [130, 200],
-        vel: [0,0]
-      },
-      map: map,
-      time: 0
-    };
-    return Object.assign({}, newState, myState);
-  }
-
   switch (action.type) {
     case 'TICK':
 

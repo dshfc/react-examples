@@ -1,34 +1,6 @@
 import Util from '../util'
-import rand from 'random-seed'
 
 export default (state, action) => {
-
-  if(!state || !state.ghosts) {
-    const newState = state || {};
-    const myState = {
-      rand: rand.create(),
-      ghosts: [
-        {
-          pos: [13, 11],
-          vel: [1, 0]
-        },
-        {
-          pos: [14, 11],
-          vel: [1, 0]
-        },
-        {
-          pos: [13, 12],
-          vel: [1, 0]
-        },
-        {
-          pos: [14, 12],
-          vel: [1, 0]
-        },
-      ]
-    };
-    return Object.assign({}, newState, myState);
-  }
-
   switch (action.type) {
     case 'TICK':
       const ghosts = state.ghosts.map((ghost) => {

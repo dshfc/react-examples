@@ -3,8 +3,10 @@ import {createStore} from 'redux';
 import Ghosts from './component/Ghosts'
 import PacMan from './component/PacMan'
 import Map from './component/Map'
+import initialState from './InitialState'
 import ghostReducer from './reducer/GhostReducer'
 import pacManReducer from './reducer/PacManReducer'
+import combineReducers from './CombineReducers'
 import './App.css';
 
 export default class App extends Component {
@@ -14,8 +16,8 @@ export default class App extends Component {
     this.key = 0; // State needed to track keyboard :(
     document.body.addEventListener('keydown', (ev) => this.key = ev.keyCode.toString());
 
-    const combineReducers = (a,b) => ((state, action) => b(a(state, action), action) );
-    const reducer = combineReducers(pacManReducer, ghostReducer);
+    const setState = (state, action) => state || initialState;
+    const reducer = combineReducers(setState, pacManReducer, ghostReducer);
     this.stateChange = this.stateChange.bind(this);
 
     this.state = reducer(undefined, {type: 'none'});
