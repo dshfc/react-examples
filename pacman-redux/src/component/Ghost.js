@@ -5,10 +5,14 @@ export default class Ghost extends Component {
     return `translate(${this.props.x}, ${this.props.y}) scale(0.625, 0.625) translate(-157, -37)`;
   }
 
+  get color() {
+    return this.props.weakness > 0 ? '#AAAAAA' : '#F44336'
+  }
+
   render() {
     return (
         <g id="Page-1" stroke="none" fill="none" >
-          <g id="labirint" transform={this.transform} fill="#F44336">
+          <g id="labirint" transform={this.transform} fill={this.color}>
             <path
               d="M157,45 C157,40.581722 160.590712,37 165,37 C169.418278,37 173,40.5907123 173,45 L173,53
               L171.010132,50.6281738 L169.023865,53 L167.00116,50.6281738 L165.024414,53 L163.025696,50.6281738

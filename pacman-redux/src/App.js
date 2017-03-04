@@ -47,7 +47,7 @@ export default class App extends Component {
     return (
       <svg viewBox="0 0 280 280" style={{width: "100%", height: "100%"}}>
         <Map key="map" map={this.state.map} time={this.state.time} />
-        <Ghosts key="ghosts" ghosts={this.state.ghosts} />
+        <Ghosts key="ghosts" ghosts={this.state.ghosts} weakness={this.state.pacman.power} />
         <PacMan key="pacman" x={this.state.pacman.pos[0]} y={this.state.pacman.pos[1]} dying={this.state.pacman.dying} />
       </svg>
     );

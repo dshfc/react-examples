@@ -20,15 +20,20 @@ export default (state, action) => {
         ? state.pacman.pos
         : nextPos;
 
+      // Power up
+      const powerup = onSquare && state.map[curMapPos[1]][curMapPos[0]] === 4;
+      const power = powerup ? 60 * 5 : Math.max(0, state.pacman.power - 1);
+
       // Obey the law of immutability, and deep copy the whole map but remove the pellet pacman just ate
       const newMap = onSquare ? Util.cloneMapAndSetCell(state.map, curMapPos, 3) : state.map;
 
+      // Die when you hit a ghost
       const dist = state.ghosts.reduce((accumulator, ghost) => {
         const dist = Util.dist(ghost.pos, state.pacman.pos);
         return dist < accumulator ? dist : accumulator;
       }, Number.POSITIVE_INFINITY);
       console.log(dist);
-      const dying = dist < 10 ? state.pacman.dying + 1 : state.pacman.dying;
+      const dying = power <= 0 && dist < 10 ? state.pacman.dying + 1 : state.pacman.dying;
       const finalPos = dying > 0 ? state.pacman.pos : newPos;
 
       // Update and return the state
@@ -37,7 +42,8 @@ export default (state, action) => {
         pacman: {
           pos: finalPos,
           vel: newVel,
-          dying: dying
+          dying: dying,
+          power: power
         },
         time: state.time + 1
       });
