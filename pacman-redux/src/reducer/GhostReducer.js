@@ -30,9 +30,10 @@ export default (state, action) => {
             ? nextDir
             : desiredVel;
           const newPos = Util.add(ghost.pos, newVel);
+          const finalPos = state.pacman.dying > 0 ? ghost.pos : newPos;
 
           return {
-            pos: newPos,
+            pos: finalPos,
             vel: newVel
           };
         } catch (ex) {

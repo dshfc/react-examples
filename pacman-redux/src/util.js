@@ -12,6 +12,8 @@ Util.ghostHit = (map, pos) => map[pos[1]][pos[0]] !== 1 && map[pos[1]][pos[0]] !
 Util.snap = (val, cond) => cond ? val : Math.round(val);
 Util.snapVec = (val, cond) => [Util.snap(val[0], cond[0]), Util.snap(val[1], cond[1])];
 Util.divisible = (vec, base) => vec[0] % base === 0 && vec[1] % base === 0;
+Util.sq = (num) => Math.pow(num, 2);
+Util.dist = (a, b) => Math.sqrt(Util.sq(b[0]-a[0]) + Util.sq(b[1]-a[1]));
 Util.cloneMapAndSetCell = (map, pos, val) => {
   return map.map((row, rowIdx) => {
     return row.map((cell, cellIdx) => {

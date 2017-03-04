@@ -1,4 +1,5 @@
 import Util from '../util';
+import initialState from '../InitialState'
 
 export default (state, action) => {
   switch (action.type) {
@@ -22,16 +23,25 @@ export default (state, action) => {
       // Obey the law of immutability, and deep copy the whole map but remove the pellet pacman just ate
       const newMap = onSquare ? Util.cloneMapAndSetCell(state.map, curMapPos, 3) : state.map;
 
+      const dist = state.ghosts.reduce((accumulator, ghost) => {
+        const dist = Util.dist(ghost.pos, state.pacman.pos);
+        return dist < accumulator ? dist : accumulator;
+      }, Number.POSITIVE_INFINITY);
+      console.log(dist);
+      const dying = dist < 10 ? state.pacman.dying + 1 : state.pacman.dying;
+      const finalPos = dying > 0 ? state.pacman.pos : newPos;
+
       // Update and return the state
       const newState = Object.assign({}, state, {
         map: newMap,
         pacman: {
-          pos: newPos,
-          vel: newVel
+          pos: finalPos,
+          vel: newVel,
+          dying: dying
         },
         time: state.time + 1
       });
-      return newState;
+      return dying > 100 ? initialState : newState;
 
     default:
       return state;

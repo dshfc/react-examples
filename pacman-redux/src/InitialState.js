@@ -3,7 +3,8 @@ import rand from 'random-seed'
 export default {
     pacman: {
         pos: [130, 200],
-        vel: [0,0]
+        vel: [0,0],
+        dying: 0
     },
     time: 0,
     rand: rand.create(42),
