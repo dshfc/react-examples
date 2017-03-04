@@ -23,7 +23,7 @@ export default class Map extends Component {
     switch (cell) {
       case 0: return <Wall key={key} x={colIdx * 10} y={rowIdx * 10} />;
       case 1: return <Pellet key={key} x={colIdx * 10} y={rowIdx * 10} />;
-      case 2: return <Pellet key={key} x={colIdx * 10} y={rowIdx * 10} />;
+      case 2: return <Floor key={key} x={colIdx * 10} y={rowIdx * 10} />;
       case 3: return <Floor key={key} x={colIdx * 10} y={rowIdx * 10} />;
       case 4: return <PowerUp key={key} x={colIdx * 10} y={rowIdx * 10} time={this.props.time} />;
       default: return <g />

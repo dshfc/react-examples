@@ -9,9 +9,21 @@ export default (state, action) => {
       rand: rand.create(),
       ghosts: [
         {
-          pos: [13, 10],
+          pos: [13, 11],
           vel: [1, 0]
-        }
+        },
+        {
+          pos: [14, 11],
+          vel: [1, 0]
+        },
+        {
+          pos: [13, 12],
+          vel: [1, 0]
+        },
+        {
+          pos: [14, 12],
+          vel: [1, 0]
+        },
       ]
     };
     return Object.assign({}, newState, myState);
@@ -31,10 +43,10 @@ export default (state, action) => {
 
         const desiredVelocity = ghost.vel;
         const desiredPos = Util.focVec(Util.add(ghost.pos, desiredVelocity), desiredVelocity);
-        const newPos = Util.mapHit(state.map, desiredPos)
+        const newPos = Util.ghostHit(state.map, desiredPos)
           ? Util.round(ghost.pos)
           : Util.add(ghost.pos, Util.divide(desiredVelocity, 10));
-        const newVel = Util.mapHit(state.map, desiredPos)
+        const newVel = Util.ghostHit(state.map, desiredPos)
           ? nextDir : ghost.vel;
         const snapped = Util.snapVec(newPos, desiredVelocity);
         return {
