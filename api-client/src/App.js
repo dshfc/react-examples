@@ -27,6 +27,7 @@ class App extends Component {
           </Nav>
         </Navbar>
         {this.props.children}
+        <footer></footer>
       </div>
     );
   }

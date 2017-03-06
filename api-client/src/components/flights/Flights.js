@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import Flight from './Flight';
 import FlightList from './FlightList';
+import TicketTotal from './TicketTotal';
 
 function Flights () {
 
@@ -11,14 +12,17 @@ function Flights () {
         <Row>
           <Col md={3}>
             <ListGroup>
-              <ListGroupItem href="#flight">Singl Flight</ListGroupItem>
+              <ListGroupItem href="#flight">Single Flight</ListGroupItem>
               <ListGroupItem href="#flightlist">List of Flights</ListGroupItem>
+              <ListGroupItem href="#tickettotal">Ticket Total</ListGroupItem>
             </ListGroup>
           </Col>
           <Col md={9}>
             <Flight />
             <hr/>
             <FlightList />
+            <hr/>
+            <TicketTotal />
             <hr/>
           </Col>
         </Row>

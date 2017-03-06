@@ -74,7 +74,7 @@ class Flight extends Component {
   render() {
     return (
       <Row id="flight">
-        <Col sm={10} smOffset={2}>
+        <Col sm={12}>
           <h3>Get a flight (Simple Endpoint)</h3>
           <p>
             <Button onClick={this.getFlight}>Get a Flight</Button>

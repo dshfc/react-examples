@@ -81,7 +81,7 @@ class FlightList extends Component {
   render() {
     return (
       <Row id="flightlist">
-        <Col sm={10} smOffset={2}>
+        <Col sm={12}>
           <h3>Get a List of Flights</h3>
           <p>
             <Button onClick={this.getFlights}>ALL THE FLIGHTS!</Button>
