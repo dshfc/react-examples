@@ -24,6 +24,9 @@ class App extends Component {
             <LinkContainer to="/flights">
               <NavItem eventKey={2}>Flights</NavItem>
             </LinkContainer>
+            <LinkContainer to="/movies">
+              <NavItem eventKey={3}>Movies</NavItem>
+            </LinkContainer>
           </Nav>
         </Navbar>
         {this.props.children}

@@ -11,7 +11,7 @@ const Message = ({answer, error}) => {
             {error.message}
           </p>
           <p>
-            {error.response.status}
+            {error.response ? error.response.status : null}
           </p>
         </Alert>
       </div>
