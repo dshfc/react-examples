@@ -44,7 +44,10 @@ const JsonMessage = ({answer, error}) => {
 }
 
 JsonMessage.propTypes = {
-  answer: React.PropTypes.object,
+  answer: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array,
+  ]),
   error: React.PropTypes.object
 }
 

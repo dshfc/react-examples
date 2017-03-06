@@ -52,21 +52,21 @@ class TicketTotal extends Component {
 
   addRow(e) {
     const defaultNames = [
-      {price: 100, firstName: "Samuel", lastName: "Seabury"},
-      {price: 100, firstName: "Charles", lastName: "Lee"},
-      {price: 100, firstName: "Maria", lastName: "Reynolds"},
-      {price: 100, firstName: "Aaron", lastName: "Burr"},
-      {price: 100, firstName: "Eliza", lastName: "Hamilton"},
-      {price: 100, firstName: "George", lastName: "Washington"},
-      {price: 100, firstName: "James", lastName: "Madison"},
-      {price: 100, firstName: "James", lastName: "Reynolds"},
-      {price: 100, firstName: "Hercules", lastName: "Mulligan"},
-      {price: 100, firstName: "Peggy", lastName: "Schuyler"},
-      {price: 100, firstName: "Philip", lastName: "Hamilton"},
-      {price: 100, firstName: "Thomas", lastName: "Jefferson"},
-      {price: 100, firstName: "Philip", lastName: "Schuyler"},
-      {price: 100, firstName: "John", lastName: "Laurens"},
-      {price: 100, firstName: "George", lastName: "Eacker"},
+      {firstName: "Samuel", lastName: "Seabury", price: 100},
+      {firstName: "Charles", lastName: "Lee", price: 100},
+      {firstName: "Maria", lastName: "Reynolds", price: 100},
+      {firstName: "Aaron", lastName: "Burr", price: 100},
+      {firstName: "Eliza", lastName: "Hamilton", price: 100},
+      {firstName: "George", lastName: "Washington", price: 100},
+      {firstName: "James", lastName: "Madison", price: 100},
+      {firstName: "James", lastName: "Reynolds", price: 100},
+      {firstName: "Hercules", lastName: "Mulligan", price: 100},
+      {firstName: "Peggy", lastName: "Schuyler", price: 100},
+      {firstName: "Philip", lastName: "Hamilton", price: 100},
+      {firstName: "Thomas", lastName: "Jefferson", price: 100},
+      {firstName: "Philip", lastName: "Schuyler", price: 100},
+      {firstName: "John", lastName: "Laurens", price: 100},
+      {firstName: "George", lastName: "Eacker", price: 100},
     ]
 
     e.preventDefault()
@@ -150,14 +150,14 @@ class TicketTotal extends Component {
 
           <Button type="submit" onClick={this.getTotal}>Get Total</Button>
 
+          <JsonMessage error={this.state.error} answer={this.state.answer} />
+
           <div>
             <p>
               <strong>Request Payload</strong>
             </p>
             <pre><code>{JSON.stringify(this.state.flight, null, 2)}</code></pre>
           </div>
-
-          <JsonMessage error={this.state.error} answer={this.state.answer} />
         </Col>
       </Row>
     );
