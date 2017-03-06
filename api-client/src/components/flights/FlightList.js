@@ -3,18 +3,18 @@ import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import JsonMessage from '../JsonMessage';
 
-class Flight extends Component {
+class FlightList extends Component {
 
   constructor() {
     super()
     this.state = { answer: null }
-    this.getFlight = this.getFlight.bind(this)
+    this.getFlights = this.getFlights.bind(this)
   }
 
-  getFlight(e) {
+  getFlights(e) {
     e.preventDefault()
 
-    fetch('/flights/flight')
+    fetch('/flights')
       .then(r => {
         if(r.ok) return r.json()
         let message =`An error has occurred with GET to ${r.url}`
@@ -33,6 +33,12 @@ class Flight extends Component {
 
     const Validator = require('jsonschema').Validator
     const v = new Validator()
+
+    const flightListSchema = {
+      "id": "/FlightList",
+      "type": "array",
+      "items": {"$ref": "/Flight"}
+    }
 
     const flightSchema = {
       "id": "/Flight",
@@ -66,18 +72,19 @@ class Flight extends Component {
       "required": ["firstName", "lastName"]
     }
 
+    v.addSchema(flightSchema, '/Flight');
     v.addSchema(ticketSchema, '/Ticket');
     v.addSchema(personSchema, '/Person');
-    v.validate(answer, flightSchema, {throwError: true});
+    v.validate(answer, flightListSchema, {throwError: true});
   }
 
   render() {
     return (
-      <Row id="flight">
+      <Row id="flightlist">
         <Col sm={10} smOffset={2}>
-          <h3>Get a flight (Simple Endpoint)</h3>
+          <h3>Get a List of Flights</h3>
           <p>
-            <Button onClick={this.getFlight}>Get a Flight</Button>
+            <Button onClick={this.getFlights}>ALL THE FLIGHTS!</Button>
           </p>
           <JsonMessage error={this.state.error} answer={this.state.answer} />
         </Col>
@@ -87,4 +94,4 @@ class Flight extends Component {
 
 }
 
-export default Flight;
+export default FlightList;
