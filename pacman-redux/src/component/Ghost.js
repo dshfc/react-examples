@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
-export default class Ghost extends Component {
+class Ghost extends Component {
   get transform() {
     return `translate(${this.props.x}, ${this.props.y}) scale(0.625, 0.625) translate(-157, -37)`;
   }
@@ -39,3 +40,11 @@ export default class Ghost extends Component {
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    weakness: state.pacman.power
+  }
+}
+
+export default connect(mapStateToProps)(Ghost)
