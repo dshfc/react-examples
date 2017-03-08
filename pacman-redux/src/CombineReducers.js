@@ -1,5 +1,5 @@
 // Use recursion to create binary tree of reducer functions that call all args in order
-export default function combineReducers() {
+export default function combineReducers() { // arguments array only available in old-school function()
   return ((args) => { // Attempt to mimic scala "match" using a JS iife and a switch
     switch(args.length) { // http://docs.scala-lang.org/tutorials/tour/pattern-matching.html
       case 0: throw new Error('Invalid number of arguments');
@@ -10,5 +10,5 @@ export default function combineReducers() {
         (state, action) => args[args.length-1](args[args.length-2](state, action), action)
       ); // Tail recursion: http://www.2ality.com/2015/06/tail-call-optimization.html
     }
-  })([...arguments]);
+  })([...arguments]); // Arguments is an Object, not an array, need spread operator to turn into array
 }
