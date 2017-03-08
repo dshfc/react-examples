@@ -1,3 +1,4 @@
+// Use recursion to create binary tree of reducer functions that call all args in order
 export default function combineReducers() {
   return ((args) => { // Attempt to mimic scala "match" using a JS iife and a switch
     switch(args.length) { // http://docs.scala-lang.org/tutorials/tour/pattern-matching.html
