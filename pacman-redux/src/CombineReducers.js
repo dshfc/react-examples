@@ -1,20 +1,13 @@
 export default function combineReducers() {
-  if(arguments.length <= 0) {
-    throw new Error('Invalid number of arguments');
-  } else if(arguments.length === 1) {
-    return arguments[0];
-  } else if(arguments.length === 2) {
-    const a = arguments[0];
-    const b = arguments[1];
-    return (state, action) => b(a(state, action), action);
-  } else {
-    // Use recursion to create binary tree of reducer functions that call all args in order
-    const e = arguments[arguments.length-2];
-    const f = arguments[arguments.length-1];
-    const func = (state, action) => {
-      return f(e(state, action), action);
-    };
-    const args = [...arguments].slice(0, arguments.length-2);
-    return combineReducers(...args, func); // Does JS have tail recursion yet?
-  }
+  return ((args) => { // Attempt to mimic scala "match" using a JS iife and a switch
+    switch(args.length) { // http://docs.scala-lang.org/tutorials/tour/pattern-matching.html
+      case 0: throw new Error('Invalid number of arguments');
+      case 1: return args[0];
+      case 2: return (state, action) => args[1](args[0](state, action), action);
+      default: return combineReducers(
+        ...args.slice(0, args.length-2),
+        (state, action) => args[args.length-1](args[args.length-2](state, action), action)
+      ); // Tail recursion: http://www.2ality.com/2015/06/tail-call-optimization.html
+    }
+  })([...arguments]);
 }
