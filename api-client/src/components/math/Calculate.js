@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Message from '../Message';
+import { apiUrl } from '../Utils'
 
 class Calculate extends Component {
 
@@ -21,7 +22,7 @@ class Calculate extends Component {
     fetch(path)
       .then(r => {
         if(r.ok) return r.text()
-        let message =`An error has occurred with GET to ${r.url}`
+        let message =`An error has occurred with GET to ${apiUrl(r.url)}`
         const error = new Error(message)
         error.response = r
         throw error

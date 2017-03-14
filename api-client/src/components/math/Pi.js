@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import Message from '../Message';
+import { apiUrl } from '../Utils'
 
 class Pi extends Component {
 
@@ -17,7 +18,7 @@ class Pi extends Component {
     fetch('/math/pi')
       .then(r => {
         if(r.ok) return r.text()
-        let message =`An error has occurred with GET to ${r.url}`
+        let message =`An error has occurred with GET to ${apiUrl(r.url)}`
         const error = new Error(message)
         error.response = r
         throw error

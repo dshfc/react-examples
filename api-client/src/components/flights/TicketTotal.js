@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import JsonMessage from '../JsonMessage';
 import { Table, Glyphicon, FormControl } from 'react-bootstrap';
+import { apiUrl } from '../Utils'
 
 class TicketTotal extends Component {
 
@@ -32,7 +33,7 @@ class TicketTotal extends Component {
     fetch('/flights/tickets/total', {method, body, headers})
       .then(r => {
         if(r.ok) return r.json()
-        let message =`An error has occurred with ${method} to ${r.url}`
+        let message =`An error has occurred with ${method} to ${apiUrl(r.url)}`
         const error = new Error(message)
         error.response = r
         throw error

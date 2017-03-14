@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import JsonMessage from '../JsonMessage';
+import { apiUrl } from '../Utils'
 
 class FlightList extends Component {
 
@@ -17,7 +18,7 @@ class FlightList extends Component {
     fetch('/flights')
       .then(r => {
         if(r.ok) return r.json()
-        let message =`An error has occurred with GET to ${r.url}`
+        let message =`An error has occurred with GET to ${apiUrl(r.url)}`
         const error = new Error(message)
         error.response = r
         throw error
