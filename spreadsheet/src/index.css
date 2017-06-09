@@ -1,0 +1,45 @@
+body, * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.spreadsheet {
+  display: table;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.row {
+  display: table-row;
+}
+
+.cell {
+  display: table-cell;
+  border: 1px solid #ccc;
+  padding: 3px;
+  width: 60px;
+}
+
+.cell.row-header, .cell.column-header, .cell.select-all {
+  background: #ccc;
+}
+
+.cell.row-header {
+  width: 2em;
+}
+
+.cell.column-header {
+  text-align: center;
+}
+
+.cell.editing {
+  margin: 0;
+  padding: 0;
+}
+
+.cell.editing input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
