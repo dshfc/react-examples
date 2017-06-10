@@ -146,3 +146,4 @@ function Cell({
 }
 
 export default App
+export {Cell, Row}
