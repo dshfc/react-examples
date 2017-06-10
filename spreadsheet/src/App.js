@@ -15,22 +15,13 @@ class App extends Component {
 
   emptySpreadsheet() {
     return Array.from(new Array(16), () => {
-        return Array.from(new Array(26), () => ({}))
-      }).reduce((rowData, row, i) => {
-        rowData.set(
-          i,
-          row.reduce((cellData, cell, j) => {
-            cellData.set(j, cell)
-            return cellData
-          }, new Map())
-        )
-        return rowData
-      }, new Map())
+      return Array.from(new Array(26), () => ({}))
+    })
   }
 
   headerRow() {
     const cells = []
-    this.state.data.get(0).forEach((_, columnNumber) => {
+    this.state.data[0].forEach((_, columnNumber) => {
       cells.push(
         <div key={`header=${`header-${columnNumber}`}`} className="cell column-header">
           {columnNumber}
@@ -64,9 +55,8 @@ class App extends Component {
   }
 
   rows() {
-    const rows = []
-    this.state.data.forEach((row, i) => {
-      rows.push(
+    return this.state.data.map((row, i) => {
+      return (
         <Row  key={`row-${i}`}
               rowNumber={i}
               row={i}
@@ -75,7 +65,6 @@ class App extends Component {
               cellWasUpdated={this.cellWasUpdated} />
       )
     })
-    return rows
   }
 
   render() {
@@ -88,89 +77,72 @@ class App extends Component {
   }
 }
 
-class Row extends Component {
+function Row({
+  row,
+  data,
+  cellStartedEditing,
+  cellWasUpdated,
+  rowNumber,
+}) {
 
-  cells() {
-    const cells = []
-    this.props.data.forEach((cell, i) => {
-      cells.push(
-        <Cell key={`cell-${this.props.row}-${i}`}
-              data={cell}
-              rowNumber={this.props.rowNumber}
-              columnNumber={i}
-              cellStartedEditing={this.props.cellStartedEditing}
-              cellWasUpdated={this.props.cellWasUpdated} />
-      )
-    })
-    return cells
+  const cells = data.map((cell, i) => {
+    return (
+      <Cell key={`cell-${row}-${i}`}
+            data={cell}
+            rowNumber={rowNumber}
+            columnNumber={i}
+            cellStartedEditing={cellStartedEditing}
+            cellWasUpdated={cellWasUpdated} />
+    )
+  })
+
+  return (
+    <div className="row">
+      <div className="cell row-header">
+        {rowNumber}
+      </div>
+      {cells}
+    </div>
+  )
+
+}
+
+function Cell({
+  cellStartedEditing,
+  cellWasUpdated,
+  rowNumber,
+  columnNumber,
+  data
+}) {
+
+  const onDoubleClick = () => {
+    cellStartedEditing( rowNumber, columnNumber, data )
   }
 
-  render() {
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      cellWasUpdated( rowNumber, columnNumber, data )
+    }
+  }
+
+  if (data.editing) {
     return (
-      <div className="row">
-        <div className="cell row-header">
-          {this.props.rowNumber}
-        </div>
-        {this.cells()}
+      <div  className="cell editing" onDoubleClick={onDoubleClick}>
+        <input  className="cell"
+                autoFocus
+                defaultValue={data.value}
+                onChange={(e) => data.value = e.target.value}
+                onKeyPress={onKeyPress} />
+      </div>
+    )
+  } else {
+    return (
+      <div  className="cell" onDoubleClick={onDoubleClick}>
+        {data.value}
       </div>
     )
   }
 
-}
-
-class Cell extends Component {
-  constructor() {
-    super()
-    this.onDoubleClick = this.onDoubleClick.bind(this)
-    this.onKeyPress = this.onKeyPress.bind(this)
-  }
-
-  onDoubleClick() {
-    this.props.cellStartedEditing(
-      this.props.rowNumber,
-      this.props.columnNumber,
-      this.props.data
-    )
-  }
-
-  onKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.props.cellWasUpdated(
-        this.props.rowNumber,
-        this.props.columnNumber,
-        this.props.data
-      )
-    }
-  }
-
-  componentDidUpdate(){
-    console.log(`updating cell`);
-    if (this.props.data.editing) {
-      this.input.focus()
-    }
-  }
-
-  render() {
-    if (this.props.data.editing) {
-      return (
-        <div  className="cell editing"
-              onDoubleClick={this.onDoubleClick}>
-          <input  className="cell"
-                  defaultValue={this.props.data.value}
-                  onChange={(e) => this.props.data.value = e.target.value}
-                  onKeyPress={this.onKeyPress}
-                  ref={(input) => { this.input = input }} />
-        </div>
-      )
-    } else {
-      return (
-        <div  className="cell"
-              onDoubleClick={this.onDoubleClick}>
-          {this.props.data.value}
-        </div>
-      )
-    }
-  }
 }
 
 export default App
