@@ -39,12 +39,12 @@ class App extends Component {
     const object = this.state.data[row][column]
 
     if (this.state.editing) {
-      const cell = this.state.editing
+      const cell = this.state.data[this.state.editing.row][this.state.editing.column]
       cell.editing = false
     }
     object.editing = true
     this.setState({
-      editing: object,
+      editing: { row, column },
       data: this.state.data
     })
   }
