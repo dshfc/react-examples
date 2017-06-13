@@ -1,13 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import {Cell} from './App'
+import Cell from './Cell'
 import { mount } from 'enzyme'
-
-it('renders the app without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<App />, div)
-})
 
 test('Cell calls the startEditing function when double-clicked', () => {
   const div = document.createElement('div')
