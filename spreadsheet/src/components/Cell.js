@@ -4,7 +4,7 @@ class Cell extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { value: props.value }
+    this.value = this.props.value
     this.onDoubleClick = this.onDoubleClick.bind(this)
     this.onKeyPress = this.onKeyPress.bind(this)
   }
@@ -21,7 +21,7 @@ class Cell extends React.Component {
       this.props.cellWasUpdated(
         this.props.rowNumber,
         this.props.columnNumber,
-        this.state.value,
+        this.value,
       )
     }
   }
@@ -36,7 +36,7 @@ class Cell extends React.Component {
           <input  className="cell"
                   autoFocus
                   defaultValue={data.value}
-                  onChange={(e) => this.setState({value: e.target.value}) }
+                  onChange={(e) => this.value = e.target.value }
                   onKeyPress={this.onKeyPress} />
         </div>
       )
