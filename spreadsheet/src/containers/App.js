@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import Cell from '../components/Cell'
 import Row from '../components/Row'
 
 class App extends Component {
@@ -16,7 +15,7 @@ class App extends Component {
   }
 
   emptySpreadsheet() {
-    return Array.from(new Array(16), () => {
+    return Array.from(new Array(30), () => {
       return Array.from(new Array(26), () => ({}))
     })
   }
@@ -32,11 +31,13 @@ class App extends Component {
     })
 
     return [
-        <div key="select-all" className="cell select-all"></div>
+        <div key="select-all" className="row-header"></div>
       ].concat(cells)
   }
 
-  cellStartedEditing(row, column, object) {
+  cellStartedEditing(row, column) {
+    const object = this.state.data[row][column]
+
     if (this.state.editing) {
       const cell = this.state.editing
       cell.editing = false
@@ -48,7 +49,9 @@ class App extends Component {
     })
   }
 
-  cellWasUpdated(row, column, object) {
+  cellWasUpdated(row, column, value) {
+    const object = this.state.data[row][column]
+    object.value = value
     object.editing = false
     this.setState({
       editing: null,

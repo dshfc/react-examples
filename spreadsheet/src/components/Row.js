@@ -1,34 +1,28 @@
 import React from 'react'
 import Cell from './Cell'
 
-function Row({
-  row,
-  data,
-  cellStartedEditing,
-  cellWasUpdated,
-  rowNumber,
-}) {
+class Row extends React.Component {
+  render() {
+    const cells = this.props.data.map((cell, i) => {
+      return (
+        <Cell key={`cell-${this.props.row}-${i}`}
+              data={cell}
+              rowNumber={this.props.rowNumber}
+              columnNumber={i}
+              cellStartedEditing={this.props.cellStartedEditing}
+              cellWasUpdated={this.props.cellWasUpdated} />
+      )
+    })
 
-  const cells = data.map((cell, i) => {
     return (
-      <Cell key={`cell-${row}-${i}`}
-            data={cell}
-            rowNumber={rowNumber}
-            columnNumber={i}
-            cellStartedEditing={cellStartedEditing}
-            cellWasUpdated={cellWasUpdated} />
-    )
-  })
-
-  return (
-    <div className="row">
-      <div className="cell row-header">
-        {rowNumber}
+      <div className="row">
+        <div className="row-header">
+          {this.props.rowNumber}
+        </div>
+        {cells}
       </div>
-      {cells}
-    </div>
-  )
-
+    )
+  }
 }
 
 export default Row

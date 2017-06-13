@@ -2,6 +2,8 @@ body, * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 12px;
+  font-family: Arial;
 }
 
 .spreadsheet {
@@ -14,19 +16,23 @@ body, * {
   display: table-row;
 }
 
-.cell {
+.cell, .row-header {
   display: table-cell;
   border: 1px solid #ccc;
   padding: 3px;
+}
+
+.cell {
   width: 60px;
 }
 
-.cell.row-header, .cell.column-header, .cell.select-all {
-  background: #ccc;
+.row-header {
+  width: 40px;
+  padding-left: 7px;
 }
 
-.cell.row-header {
-  width: 2em;
+.row-header, .cell.column-header {
+  background: #ccc;
 }
 
 .cell.column-header {

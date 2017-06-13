@@ -18,6 +18,6 @@ test('Cell calls the startEditing function when double-clicked', () => {
 
   wrapper.find('div.cell').simulate('doubleClick')
 
-  expect(cellStartedEditing).toHaveBeenCalledWith(12, 14, {})
+  expect(cellStartedEditing).toHaveBeenCalledWith(12, 14)
   expect(cellWasUpdated).not.toHaveBeenCalled()
 })
