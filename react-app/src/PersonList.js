@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 
 export default class PersonList extends Component {
@@ -7,6 +9,7 @@ export default class PersonList extends Component {
       <li key={i}>
         {person.firstName} {person.lastName}
         &nbsp; <a href="javascript:void(0)" onClick={() => this.props.onEdit(person)}>edit</a>
+        &nbsp; <a href="javascript:void(0)" onClick={() => console.log('delete me!')}>delete</a>
       </li>
     ))
   }

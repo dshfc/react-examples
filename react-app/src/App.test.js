@@ -46,4 +46,19 @@ describe('App', () => {
     expect(app.state().editing).toBe(null);
     expect(personList.props().people).toBe(app.state().people);
   });
+
+  it('new person added to list', () => {
+    const div = document.createElement('div');
+    const app = shallow(<App />, div);
+
+    app.state()['add-first-name'] = 'Hello'
+    app.state()['add-last-name'] = 'World'
+
+    app.find('button').simulate('click', {
+      preventDefault: () => {}
+    })
+
+    console.log(app.state().people)
+    expect(app.state().people).toHaveLength(4);
+  })
 });

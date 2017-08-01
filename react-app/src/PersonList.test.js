@@ -23,7 +23,7 @@ describe('PersonList', () => {
     const div = document.createElement('div');
     const personList = shallow(<PersonList people={people} onEdit={onEdit} />, div);
 
-    expect(personList.find('a')).toHaveLength(1);
+    expect(personList.find('a')).toHaveLength(2);
     personList.find('a').simulate('click');
     expect(onEdit.calledOnce).toBe(true);
   });
